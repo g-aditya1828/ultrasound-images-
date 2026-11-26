@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MuscleVision — Project Diagrams</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #0f1117;
+      color: #e2e8f0;
+      padding: 32px 24px;
+    }
+    h1 {
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 800;
+      color: #f8fafc;
+      margin-bottom: 6px;
+      letter-spacing: -0.5px;
+    }
+    .subtitle {
+      text-align: center;
+      color: #94a3b8;
+      font-size: 0.9rem;
+      margin-bottom: 48px;
+    }
+    .section {
+      margin-bottom: 56px;
+    }
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #7dd3fc;
+      border-left: 4px solid #38bdf8;
+      padding-left: 12px;
+      margin-bottom: 20px;
+      letter-spacing: 0.3px;
+    }
+    .card {
+      background: #1e2433;
+      border: 1px solid #2d3748;
+      border-radius: 14px;
+      padding: 28px 32px;
+      overflow-x: auto;
+    }
+
+    /* ─── PIPELINE FLOW ─── */
+    .pipeline {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .pipe-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      min-width: 130px;
+    }
+    .pipe-box {
+      background: #1a365d;
+      border: 2px solid #3b82f6;
+      border-radius: 10px;
+      padding: 10px 16px;
+      text-align: center;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #bfdbfe;
+      white-space: nowrap;
+    }
+    .pipe-box.green  { background:#14532d; border-color:#22c55e; color:#bbf7d0; }
+    .pipe-box.purple { background:#2e1065; border-color:#a855f7; color:#e9d5ff; }
+    .pipe-box.orange { background:#431407; border-color:#f97316; color:#fed7aa; }
+    .pipe-box.teal   { background:#134e4a; border-color:#14b8a6; color:#99f6e4; }
+    .pipe-box.pink   { background:#500724; border-color:#ec4899; color:#fbcfe8; }
+    .pipe-label { font-size: 0.65rem; color: #64748b; text-align: center; }
+    .arrow {
+      font-size: 1.5rem;
+      color: #475569;
+      padding: 0 4px;
+      flex-shrink: 0;
+    }
+
+    /* ─── MODEL ARCH ─── */
+    .arch-grid {
+      display: grid;
+      grid-template-columns: 1fr 60px 1fr 60px 1fr;
+      gap: 0;
+      align-items: start;
+    }
+    .arch-col { display: flex; flex-direction: column; gap: 8px; }
+    .arch-block {
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-align: center;
+      border: 1px solid;
+    }
+    .enc  { background:#1e3a5f; border-color:#3b82f6; color:#93c5fd; }
+    .dec  { background:#1a3a2a; border-color:#22c55e; color:#86efac; }
+    .att  { background:#2e1a3a; border-color:#a855f7; color:#d8b4fe; }
+    .head { background:#3a2010; border-color:#f97316; color:#fdba74; }
+    .hrstream { background:#1a2e3a; border-color:#06b6d4; color:#67e8f9; }
+    .arch-arrow-col {
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; color: #475569; padding-top: 30px;
+    }
+    .arch-label {
+      font-size: 0.65rem; color: #64748b; text-align: center;
+      margin-bottom: 4px; font-weight: 700; letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    /* ─── DATA FLOW ─── */
+    .flow-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+    .flow-box {
+      border-radius: 8px;
+      padding: 7px 14px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      border: 1px solid;
+      white-space: nowrap;
+    }
+    .flow-note {
+      font-size: 0.68rem;
+      color: #64748b;
+      font-style: italic;
+    }
+
+    /* ─── GEOMETRY ─── */
+    .geo-svg { width: 100%; max-width: 740px; display: block; margin: 0 auto; }
+
+    /* ─── WORK SPLIT ─── */
+    .split-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .person-card {
+      border-radius: 10px;
+      padding: 18px 20px;
+    }
+    .person-a { background: #0c1a2e; border: 1.5px solid #3b82f6; }
+    .person-b { background: #0c2010; border: 1.5px solid #22c55e; }
+    .person-title {
+      font-size: 0.85rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .person-a .person-title { color: #60a5fa; }
+    .person-b .person-title { color: #4ade80; }
+    .task-item {
+      display: flex; align-items: flex-start; gap: 8px;
+      font-size: 0.72rem; color: #cbd5e1;
+      margin-bottom: 7px; line-height: 1.4;
+    }
+    .task-dot { flex-shrink: 0; margin-top: 4px; width: 6px; height: 6px; border-radius: 50%; }
+    .dot-a { background: #3b82f6; }
+    .dot-b { background: #22c55e; }
+    .week-badge {
+      display: inline-block;
+      font-size: 0.6rem; font-weight: 700;
+      background: #1e2433; border: 1px solid #334155;
+      border-radius: 4px; padding: 1px 5px;
+      color: #94a3b8; margin-bottom: 6px;
+    }
+
+    /* ─── TIMELINE ─── */
+    .timeline { display: flex; flex-direction: column; gap: 0; }
+    .tl-row {
+      display: grid;
+      grid-template-columns: 60px 1fr 1fr;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid #1e2b3c;
+      align-items: center;
+    }
+    .tl-week { font-size: 0.7rem; font-weight: 700; color: #64748b; text-align: center; }
+    .tl-task {
+      border-radius: 6px; padding: 6px 10px;
+      font-size: 0.7rem; line-height: 1.4;
+    }
+    .tl-a { background: #1a2f50; border-left: 3px solid #3b82f6; color: #bfdbfe; }
+    .tl-b { background: #142b1a; border-left: 3px solid #22c55e; color: #bbf7d0; }
+
+    .legend { display: flex; gap: 20px; justify-content: center; margin-bottom: 16px; }
+    .legend-item { display: flex; align-items: center; gap: 6px; font-size: 0.72rem; color: #94a3b8; }
+    .legend-dot { width: 10px; height: 10px; border-radius: 2px; }
+  </style>
+</head>
+<body>
+
+<h1>🦾 MuscleVision</h1>
+<p class="subtitle">Automated Muscle Architecture Analysis from Ultrasound Images — Project Diagrams</p>
+
+<!-- ══════════════════════════════════════════════════════════
+     DIAGRAM 1 — FULL PIPELINE OVERVIEW
+════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title">① Full Pipeline Overview</div>
+  <div class="card">
+    <div class="pipeline">
+      <div class="pipe-step">
+        <div class="pipe-box teal">🖼️ Ultrasound<br>Image (grayscale)</div>
+        <div class="pipe-label">Input</div>
+      </div>
+      <div class="arrow">→</div>
+
+      <div class="pipe-step">
+        <div class="pipe-box">📐 Letterbox<br>Resize</div>
+        <div class="pipe-label">Preserve aspect ratio<br>pad to canvas</div>
+      </div>
+      <div class="arrow">→</div>
+
+      <div class="pipe-step">
+        <div class="pipe-box green">🧠 Fascicle<br>Model</div>
+        <div class="pipe-label">ResNet34 U-Net<br>+ clDice loss</div>
+      </div>
+      <div class="arrow">→</div>
+
+      <div class="pipe-step">
+        <div class="pipe-box pink">🧠 Aponeurosis<br>Model</div>
+        <div class="pipe-label">ResNet34 U-Net<br>+ Focal-Tversky</div>
+      </div>
+      <div class="arrow">→</div>
+
+      <div class="pipe-step">
+        <div class="pipe-box purple">🔧 Hysteresis<br>Post-process</div>
+        <div class="pipe-label">Repair broken<br>fascicle lines</div>
+      </div>
+      <div class="arrow">→</div>
+
+      <div class="pipe-step">
+        <div class="pipe-box orange">📐 Geometry<br>Engine</div>
+        <div class="pipe-label">Line fitting +<br>trigonometry</div>
+      </div>
+      <div class="arrow">→</div>
+
+      <div class="pipe-step">
+        <div class="pipe-box teal">📊 PA · FL · MT<br>Measurements</div>
+        <div class="pipe-label">Clinical output<br>in degrees / mm</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     DIAGRAM 2 — MODEL ARCHITECTURE
+════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title">② ResNet34 Attention U-Net Architecture</div>
+  <div class="card">
+    <div class="arch-grid">
+      <!-- ENCODER -->
+      <div class="arch-col">
+        <div class="arch-label">Encoder (ResNet34 pretrained)</div>
+        <div class="arch-block enc">Input (1×H×W) grayscale</div>
+        <div class="arch-block enc">Stem: Conv7×7 + BN + ReLU → /2 · 64ch</div>
+        <div class="arch-block enc">Layer 1: ResBlocks × 3 → /4 · 64ch  <span style="color:#64748b">(s1)</span></div>
+        <div class="arch-block enc">Layer 2: ResBlocks × 4 → /8 · 128ch <span style="color:#64748b">(s2)</span></div>
+        <div class="arch-block enc">Layer 3: ResBlocks × 6 → /16 · 256ch <span style="color:#64748b">(s3)</span></div>
+        <div class="arch-block enc">Layer 4: ResBlocks × 3 → /32 · 512ch <span style="color:#64748b">(s4)</span></div>
+        <div class="arch-block hrstream" style="margin-top:8px">Full-res stream: Conv3×3 × 2 → 16ch (native res)</div>
+      </div>
+
+      <div class="arch-arrow-col">⟶</div>
+
+      <!-- DECODER -->
+      <div class="arch-col">
+        <div class="arch-label">Decoder (Attention-gated skips)</div>
+        <div class="arch-block att">Attention Gate on s3<br><span style="color:#9d7bca;font-size:0.65rem">g=s4, x=s3 → spatial weights</span></div>
+        <div class="arch-block dec">DecBlock d4: Upsample + cat(s3) → 256ch</div>
+        <div class="arch-block att">Attention Gate on s2</div>
+        <div class="arch-block dec">DecBlock d3: Upsample + cat(s2) → 128ch</div>
+        <div class="arch-block att">Attention Gate on s1</div>
+        <div class="arch-block dec">DecBlock d2: Upsample + cat(s1) → 64ch</div>
+        <div class="arch-block att">Attention Gate on s0</div>
+        <div class="arch-block dec">DecBlock d1: Upsample + cat(s0) → 64ch</div>
+      </div>
+
+      <div class="arch-arrow-col">⟶</div>
+
+      <!-- HEAD -->
+      <div class="arch-col">
+        <div class="arch-label">Head & Output</div>
+        <div class="arch-block hrstream">Bilinear upsample → native H×W</div>
+        <div class="arch-block hrstream">Concat with full-res stream (16ch)</div>
+        <div class="arch-block head">ConvBlock(80→32) + Conv1×1</div>
+        <div class="arch-block head">Logit map (1×H×W)</div>
+        <div class="arch-block head" style="margin-top:8px">Sigmoid → Probability map</div>
+        <div class="arch-block orange" style="margin-top:8px">Threshold (tuned on val)<br>→ Binary Mask</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     DIAGRAM 3 — DATA PIPELINE
+════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title">③ Data Pipeline</div>
+  <div class="card">
+
+    <div class="flow-row">
+      <div class="flow-box enc" style="background:#1e3a5f;border-color:#3b82f6;color:#93c5fd">📁 Raw Dataset<br><span style="font-size:0.65rem;color:#64748b">fasc_imgs/ fasc_masks/<br>apo_imgs/ apo_masks/ test_imgs/</span></div>
+      <span class="arrow">→</span>
+      <div class="flow-box" style="background:#1e2433;border-color:#475569;color:#94a3b8">🔍 Audit &amp; Pair<br><span style="font-size:0.65rem;color:#64748b">Stem matching · binarize_mask fix<br>Stroke width check</span></div>
+      <span class="arrow">→</span>
+      <div class="flow-box" style="background:#1e2433;border-color:#475569;color:#94a3b8">✂️ Group Split<br><span style="font-size:0.65rem;color:#64748b">70% train · 15% val · 15% test<br>No leakage across video sweeps</span></div>
+    </div>
+
+    <div class="flow-row" style="margin-left:40px">
+      <span style="color:#334155;font-size:1.2rem">↓</span>
+    </div>
+
+    <div class="flow-row">
+      <div class="flow-box" style="background:#1a2f50;border-color:#3b82f6;color:#bfdbfe">📐 Letterbox Resize<br><span style="font-size:0.65rem;color:#64748b">Aspect-preserving · zero-pad<br>Up to 1024px long side</span></div>
+      <span class="arrow">→</span>
+      <div class="flow-box" style="background:#14532d;border-color:#22c55e;color:#bbf7d0">🎯 Mask Prep<br><span style="font-size:0.65rem;color:#64748b">INTER_AREA downscale · thr=0.15<br>Fascicle dilation ×2px</span></div>
+      <span class="arrow">→</span>
+      <div class="flow-box" style="background:#2e1065;border-color:#a855f7;color:#e9d5ff">💾 Numpy Cache<br><span style="font-size:0.65rem;color:#64748b">X[N,H,W] Y[N,H,W] .npz<br>Skip on reconnect</span></div>
+    </div>
+
+    <div class="flow-row" style="margin-left:40px">
+      <span style="color:#334155;font-size:1.2rem">↓</span>
+    </div>
+
+    <div class="flow-row">
+      <div class="flow-box" style="background:#431407;border-color:#f97316;color:#fed7aa">🎲 sample_window<br><span style="font-size:0.65rem;color:#64748b">80% foreground-centred crops<br>384×384 patches</span></div>
+      <span class="arrow">→</span>
+      <div class="flow-box" style="background:#431407;border-color:#f97316;color:#fed7aa">✨ Augment<br><span style="font-size:0.65rem;color:#64748b">Flip · Affine · Gamma<br>Speckle noise · Blur</span></div>
+      <span class="arrow">→</span>
+      <div class="flow-box" style="background:#134e4a;border-color:#14b8a6;color:#99f6e4">🔄 DataLoader<br><span style="font-size:0.65rem;color:#64748b">Batch=12 (train) · 4 (val)<br>2 workers · pin_memory</span></div>
+      <span class="arrow">→</span>
+      <div class="flow-box" style="background:#1a365d;border-color:#3b82f6;color:#bfdbfe">🧠 Model</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     DIAGRAM 4 — GEOMETRY ENGINE
+════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title">④ Geometry Engine — Extracting PA · FL · MT</div>
+  <div class="card">
+    <svg class="geo-svg" viewBox="0 0 740 310" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#475569"/>
+        </marker>
+      </defs>
+
+      <!-- Background ultrasound-like image -->
+      <rect x="20" y="20" width="300" height="260" rx="8" fill="#0a1628" stroke="#1e3a5f" stroke-width="1.5"/>
+      <text x="170" y="12" text-anchor="middle" fill="#64748b" font-size="10" font-family="monospace">Ultrasound + Segmentation Masks</text>
+
+      <!-- Superficial aponeurosis (pink) -->
+      <line x1="30" y1="80"  x2="310" y2="90"  stroke="#ec4899" stroke-width="4" stroke-linecap="round" opacity="0.9"/>
+      <text x="315" y="88" fill="#ec4899" font-size="9" font-family="monospace">Superficial</text>
+
+      <!-- Deep aponeurosis (pink) -->
+      <line x1="30" y1="210" x2="310" y2="220" stroke="#ec4899" stroke-width="4" stroke-linecap="round" opacity="0.9"/>
+      <text x="315" y="218" fill="#ec4899" font-size="9" font-family="monospace">Deep</text>
+
+      <!-- Fascicle lines (green) -->
+      <line x1="70"  y1="82"  x2="110" y2="215" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" opacity="0.85"/>
+      <line x1="130" y1="84"  x2="175" y2="217" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" opacity="0.85"/>
+      <line x1="195" y1="85"  x2="240" y2="218" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" opacity="0.85"/>
+
+      <!-- Fitted apo lines (cyan dashed) -->
+      <line x1="30" y1="80"  x2="310" y2="91"  stroke="#06b6d4" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.7"/>
+      <line x1="30" y1="210" x2="310" y2="221" stroke="#06b6d4" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.7"/>
+
+      <!-- MT measurement arrow -->
+      <line x1="258" y1="91" x2="258" y2="218" stroke="#f8fafc" stroke-width="1.5" marker-end="url(#arr)" marker-start="url(#arr)" opacity="0.6"/>
+      <text x="264" y="160" fill="#f8fafc" font-size="9" font-family="monospace" font-weight="bold">MT</text>
+
+      <!-- PA angle arc -->
+      <path d="M 110,215 A 25,25 0 0,0 125,196" stroke="#facc15" stroke-width="1.5" fill="none"/>
+      <text x="118" y="208" fill="#facc15" font-size="9" font-family="monospace" font-weight="bold">PA</text>
+
+      <!-- FL label -->
+      <text x="140" y="155" fill="#4ade80" font-size="9" font-family="monospace" font-weight="bold">FL</text>
+
+      <!-- Legend in image -->
+      <rect x="22" y="250" width="295" height="25" rx="4" fill="#0f1b2d" opacity="0.9"/>
+      <line x1="30" y1="263" x2="50" y2="263" stroke="#ec4899" stroke-width="3"/>
+      <text x="55" y="266" fill="#ec4899" font-size="8">Aponeurosis mask</text>
+      <line x1="140" y1="263" x2="160" y2="263" stroke="#22c55e" stroke-width="2.5"/>
+      <text x="165" y="266" fill="#22c55e" font-size="8">Fascicle mask</text>
+      <line x1="230" y1="263" x2="250" y2="263" stroke="#06b6d4" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <text x="255" y="266" fill="#06b6d4" font-size="8">Fitted line</text>
+
+      <!-- RIGHT SIDE: Steps -->
+      <text x="380" y="38" fill="#7dd3fc" font-size="11" font-weight="bold" font-family="sans-serif">Geometry Steps</text>
+
+      <!-- Step boxes -->
+      <!-- Step 1 -->
+      <rect x="370" y="50" width="340" height="48" rx="6" fill="#1a2f50" stroke="#3b82f6" stroke-width="1"/>
+      <text x="383" y="68" fill="#93c5fd" font-size="10" font-weight="bold">① fit_aponeuroses(apo_mask)</text>
+      <text x="383" y="82" fill="#64748b" font-size="9">Connected components → per-column median y → polyfit → 2 lines</text>
+      <text x="383" y="93" fill="#64748b" font-size="9">Filter by width (&gt;15% W) · vertical separation (&gt;8% H)</text>
+
+      <!-- Step 2 -->
+      <rect x="370" y="110" width="340" height="40" rx="6" fill="#1a3a2a" stroke="#22c55e" stroke-width="1"/>
+      <text x="383" y="128" fill="#86efac" font-size="10" font-weight="bold">② muscle_thickness_px(sup, deep)</text>
+      <text x="383" y="143" fill="#64748b" font-size="9">Median perpendicular gap × cos(atan(mean_slope)) → MT px → mm</text>
+
+      <!-- Step 3 -->
+      <rect x="370" y="162" width="340" height="52" rx="6" fill="#2e1065" stroke="#a855f7" stroke-width="1"/>
+      <text x="383" y="180" fill="#d8b4fe" font-size="10" font-weight="bold">③ fascicle_stats(fasc_mask, sup, deep)</text>
+      <text x="383" y="195" fill="#64748b" font-size="9">cv2.fitLine per component → angle → PA filter 3°–60°</text>
+      <text x="383" y="207" fill="#64748b" font-size="9">Intersect with both apo lines → FL px → length-weighted median</text>
+
+      <!-- Step 4 -->
+      <rect x="370" y="226" width="340" height="40" rx="6" fill="#3a2010" stroke="#f97316" stroke-width="1"/>
+      <text x="383" y="244" fill="#fdba74" font-size="10" font-weight="bold">④ calculate_clinical_parameters()</text>
+      <text x="383" y="258" fill="#64748b" font-size="9">px → mm via PX_PER_MM · NaN fallback: FL = MT / sin(PA)</text>
+
+      <!-- Output -->
+      <rect x="370" y="278" width="340" height="28" rx="6" fill="#134e4a" stroke="#14b8a6" stroke-width="1.5"/>
+      <text x="540" y="296" text-anchor="middle" fill="#99f6e4" font-size="10" font-weight="bold">PA (degrees) · FL (mm) · MT (mm)</text>
+
+      <!-- Arrows between steps -->
+      <line x1="540" y1="98"  x2="540" y2="110" stroke="#475569" stroke-width="1.2" marker-end="url(#arr)"/>
+      <line x1="540" y1="150" x2="540" y2="162" stroke="#475569" stroke-width="1.2" marker-end="url(#arr)"/>
+      <line x1="540" y1="214" x2="540" y2="226" stroke="#475569" stroke-width="1.2" marker-end="url(#arr)"/>
+      <line x1="540" y1="266" x2="540" y2="278" stroke="#475569" stroke-width="1.2" marker-end="url(#arr)"/>
+    </svg>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     DIAGRAM 5 — LOSS FUNCTION
+════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title">⑤ ComboLoss — Why Three Terms?</div>
+  <div class="card">
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px">
+      <div style="background:#1a2f50;border:1px solid #3b82f6;border-radius:10px;padding:16px">
+        <div style="color:#60a5fa;font-weight:800;font-size:0.82rem;margin-bottom:8px">① Weighted BCE</div>
+        <div style="color:#94a3b8;font-size:0.72rem;line-height:1.6">
+          Standard binary cross-entropy with a <strong style="color:#bfdbfe">pos_weight = √((1−fg)/fg)</strong> capped at 8×.<br><br>
+          <em>Problem it solves:</em> fascicles occupy &lt;1% of image pixels — without upweighting, the model learns to predict all-background and still gets 99% accuracy.
+        </div>
+      </div>
+      <div style="background:#2e1065;border:1px solid #a855f7;border-radius:10px;padding:16px">
+        <div style="color:#c084fc;font-weight:800;font-size:0.82rem;margin-bottom:8px">② Focal-Tversky</div>
+        <div style="color:#94a3b8;font-size:0.72rem;line-height:1.6">
+          Tversky index with <strong style="color:#e9d5ff">α=0.3, β=0.7</strong> (heavy recall bias), raised to power 0.75.<br><br>
+          <em>Problem it solves:</em> Plain Dice is symmetric between precision and recall. Here we penalise false negatives (missed fascicles) more than false positives.
+        </div>
+      </div>
+      <div style="background:#14532d;border:1px solid #22c55e;border-radius:10px;padding:16px">
+        <div style="color:#4ade80;font-weight:800;font-size:0.82rem;margin-bottom:8px">③ clDice (fascicle only)</div>
+        <div style="color:#94a3b8;font-size:0.72rem;line-height:1.6">
+          Differentiable loss on the <strong style="color:#bbf7d0">soft skeleton</strong> of pred &amp; GT masks. Computed via iterative erosion/dilation (5 iters).<br><br>
+          <em>Problem it solves:</em> BCE+Tversky rewards spatial overlap but doesn't care if predictions are fragmented. clDice rewards connected, continuous lines.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     DIAGRAM 6 — WORK DIVISION
+════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title">⑥ Work Division Between Two People</div>
+  <div class="card">
+    <div class="split-grid">
+      <div class="person-card person-a">
+        <div class="person-title">👤 Person A — Model & Training</div>
+        <div class="week-badge">Week 1–2</div>
+        <div class="task-item"><span class="task-dot dot-a"></span>Data audit · group-wise train/val/test split · baseline U-Net</div>
+        <div class="week-badge">Week 3–4</div>
+        <div class="task-item"><span class="task-dot dot-a"></span>ResNet34 Attention U-Net architecture</div>
+        <div class="task-item"><span class="task-dot dot-a"></span>Grayscale weight conversion · full-res stream</div>
+        <div class="week-badge">Week 5–6</div>
+        <div class="task-item"><span class="task-dot dot-a"></span>ComboLoss (BCE + Focal-Tversky + clDice)</div>
+        <div class="task-item"><span class="task-dot dot-a"></span>Training loop: AMP · OneCycleLR · early stopping</div>
+        <div class="task-item"><span class="task-dot dot-a"></span>Differential LR (encoder 0.3× · decoder 1×)</div>
+        <div class="week-badge">Week 7</div>
+        <div class="task-item"><span class="task-dot dot-a"></span>Threshold sweep on val · hold-out test evaluation</div>
+        <div class="task-item"><span class="task-dot dot-a"></span>Hand off checkpoints + THR values to Person B</div>
+      </div>
+      <div class="person-card person-b">
+        <div class="person-title">👤 Person B — Data & Geometry</div>
+        <div class="week-badge">Week 1–2</div>
+        <div class="task-item"><span class="task-dot dot-b"></span>Stem-based file pairing · binarize_mask fix</div>
+        <div class="task-item"><span class="task-dot dot-b"></span>Letterbox resize · prep_mask (area-avg + dilation)</div>
+        <div class="task-item"><span class="task-dot dot-b"></span>Numpy cache build · foreground-centred sample_window</div>
+        <div class="week-badge">Week 3–4</div>
+        <div class="task-item"><span class="task-dot dot-b"></span>Full augmentation pipeline (flip · affine · noise · blur)</div>
+        <div class="task-item"><span class="task-dot dot-b"></span>SegDataset (crop train · full-canvas val) · DataLoader</div>
+        <div class="week-badge">Week 5–6</div>
+        <div class="task-item"><span class="task-dot dot-b"></span>Geometry engine: fit_aponeuroses · muscle_thickness</div>
+        <div class="task-item"><span class="task-dot dot-b"></span>fascicle_stats · clinical parameter assembly</div>
+        <div class="week-badge">Week 7</div>
+        <div class="task-item"><span class="task-dot dot-b"></span>Hysteresis post-processing · segment_full_res</div>
+        <div class="task-item"><span class="task-dot dot-b"></span>Inference loop · NaN filling · visual overlay</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     DIAGRAM 7 — TIMELINE
+════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title">⑦ 8-Week Timeline</div>
+  <div class="card">
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#3b82f6"></div>Person A — Model & Training</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#22c55e"></div>Person B — Data & Geometry</div>
+    </div>
+    <div class="timeline">
+      <div class="tl-row" style="border-bottom:1px solid #334155;padding-bottom:6px;margin-bottom:4px">
+        <div style="font-size:0.68rem;color:#64748b;text-align:center;font-weight:700">WEEK</div>
+        <div style="font-size:0.68rem;color:#60a5fa;font-weight:700;padding-left:4px">PERSON A</div>
+        <div style="font-size:0.68rem;color:#4ade80;font-weight:700;padding-left:4px">PERSON B</div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-week">1–2</div>
+        <div class="tl-task tl-a">Data audit · Group split · Baseline U-Net · Track foreground fraction & stroke width</div>
+        <div class="tl-task tl-b">File pairing · Letterbox · prep_mask · Numpy cache · sample_window</div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-week">3–4</div>
+        <div class="tl-task tl-a">ResNet34 U-Net · Attention Gates · Full-res stream · Shape validation</div>
+        <div class="tl-task tl-b">Augmentation pipeline (5 transforms) · SegDataset · DataLoader setup</div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-week">5–6</div>
+        <div class="tl-task tl-a">ComboLoss · Training loop (AMP, OneCycleLR, early stop) · Training curves</div>
+        <div class="tl-task tl-b">Geometry engine: aponeurosis fitting · MT · fascicle angle/length · geometry validation</div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-week">7</div>
+        <div class="tl-task tl-a">Threshold tuning (val sweep) · Hold-out test score · Checkpoint handoff</div>
+        <div class="tl-task tl-b">Hysteresis · segment_full_res · Full inference loop · NaN fill · Visual overlay</div>
+      </div>
+      <div class="tl-row" style="border-bottom:none">
+        <div class="tl-week">8</div>
+        <div class="tl-task tl-a">Cross-review Person B's pipeline · Docstrings · Troubleshooting notes</div>
+        <div class="tl-task tl-b">Cross-review Person A's model · Clinical rationale comments · Final cleanup</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="text-align:center;color:#334155;font-size:0.7rem;padding-top:16px;padding-bottom:8px">
+  MuscleVision · Deep Learning for Muscle Architecture Analysis · Open in browser for best experience
+</div>
+
+</body>
+</html>
